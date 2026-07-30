@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Sinal Sonoro Escolar</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 500px;
+            width: 100%;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 28px;
+        }
+
+        .status {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .hora-atual {
+            font-size: 48px;
+            font-weight: bold;
+            color: #333;
+            margin: 10px 0;
+        }
+
+        .proximo-toque {
+            font-size: 18px;
+            color: #666;
+            margin: 10px 0;
+        }
+
+        .proximo-toque strong {
+            color: #764ba2;
+        }
+
+        .status-indicator {
+            display: inline-block;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .status-ativo {
+            background: #28a745;
+            color: white;
+        }
+
+        .status-inativo {
+            background: #dc3545;
+            color: white;
+        }
+
+        .controles {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #5a67d8;
+            transform: translateY(-2px);
+        }
+
+        .btn-danger {
+            background: #dc3545;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #c82333;
+            transform: translateY(-2px);
+        }
+
+        .btn-success {
+            background: #28a745;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #218838;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #5a6268;
+            transform: translateY(-2px);
+        }
+
+        .btn-warning {
+            background: #ffc107;
+            color: #333;
+        }
+
+        .btn-warning:hover {
+            background: #e0a800;
+            transform: translateY(-2px);
+        }
+
+        .horarios {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px solid #f0f0f0;
+        }
+
+        .horarios h3 {
+            color: #333;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .horario-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+        }
+
+        .horario-item {
+            background: #f8f9fa;
+            padding: 8px;
+            border-radius: 6px;
+            text-align: center;
+            font-size: 14px;
+            color: #333;
+        }
+
+        .horario-item.intervalo {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .log {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px solid #f0f0f0;
+        }
+
+        .log h3 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .log-area {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 10px;
+            max-height: 150px;
+            overflow-y: auto;
+            font-size: 12px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .log-entry {
+            padding: 2px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .log-entry .time {
+            color: #666;
+            margin-right: 10px;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px solid #f0f0f0;
+            color: #666;
+            font-size: 14px;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+            
+            .hora-atual {
+                font-size: 36px;
+            }
+            
+            .horario-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔔 Sistema de Sinal Sonoro</h1>
+        
+        <div class="status">
+            <div style="color: #666; font-size: 14px;">Hora Atual</div>
+            <div class="hora-atual" id="horaAtual">--:--:--</div>
+            <div class="proximo-toque">
+                Próximo toque: <strong id="proximoToque">--:--</strong>
+            </div>
+            <div id="statusSistema" class="status-indicator status-inativo">Sistema Desligado</div>
+        </div>
+
+        <div class="controles">
+            <button class="btn btn-success" onclick="iniciarSistema()">▶ Iniciar</button>
+            <button class="btn btn-danger" onclick="pararSistema()">⏹ Parar</button>
+            <button class="btn btn-warning" onclick="testarSom()">🔊 Testar</button>
+        </div>
+
+        <div class="horarios">
+            <h3>📅 Horários Programados</h3>
+            <div class="horario-grid">
+                <div class="horario-item">07:00</div>
+                <div class="horario-item">07:50</div>
+                <div class="horario-item">08:40</div>
+                <div class="horario-item">09:30</div>
+                <div class="horario-item intervalo">10:20 (Intervalo)</div>
+                <div class="horario-item intervalo">10:40 (Intervalo)</div>
+                <div class="horario-item">11:30</div>
+            </div>
+        </div>
+
+        <div class="log">
+            <h3>📋 Log do Sistema</h3>
+            <div class="log-area" id="logArea">
+                <div class="log-entry">Sistema aguardando inicialização...</div>
+            </div>
+        </div>
+
+        <div class="footer">
+            Sistema automático de sinal sonoro<br>
+            <small>Toques a cada 50 minutos | Intervalo 10:20 - 10:40</small>
+        </div>
+    </div>
+
+    <script src="sistema.js"></script>
+</body>
+</html>
