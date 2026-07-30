@@ -126,7 +126,7 @@ function pararSistema() {
 
 function testarSom() {
     // Testar o arquivo 700.mp3
-    const url = './700.mp3';
+    const url = './835.mp3';
     const audio = new Audio();
     audio.src = url;
     
