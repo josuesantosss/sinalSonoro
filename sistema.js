@@ -5,6 +5,7 @@
 // Configuração dos horários
 const HORARIOS = {
     '700': { hora: '07:00', label: '07:00', tipo: 'normal' },
+    '745': { hora: '07:45', label: '07:45', tipo: 'normal' },
     '750': { hora: '07:50', label: '07:50', tipo: 'normal' },
     '840': { hora: '08:40', label: '08:40', tipo: 'normal' },
     '930': { hora: '09:30', label: '09:30', tipo: 'normal' },
@@ -86,7 +87,7 @@ function pararSistema() {
 
 function testarSom() {
     // Testar o arquivo 700.mp3
-    const url = './700.mp3';
+    const url = './745.mp3';
     const audio = new Audio();
     audio.src = url;
     
