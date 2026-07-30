@@ -33,6 +33,34 @@ let ultimoToque = null;
 let audioAtual = null;
 
 // ============================================
+// FUNÇÃO PARA RENDERIZAR OS HORÁRIOS
+// ============================================
+
+function renderizarHorarios() {
+    const grid = document.getElementById('horarioGrid');
+    if (!grid) {
+        console.error('Grid de horários não encontrado!');
+        return;
+    }
+    
+    // Limpa a grid
+    grid.innerHTML = '';
+    
+    // Ordena os horários pela hora
+    const horariosArray = Object.values(HORARIOS).sort((a, b) => a.hora.localeCompare(b.hora));
+    
+    // Adiciona cada horário à grid
+    horariosArray.forEach(horario => {
+        const div = document.createElement('div');
+        div.className = `horario-item ${horario.tipo}`;
+        div.textContent = horario.label;
+        grid.appendChild(div);
+    });
+    
+    console.log(`✅ ${horariosArray.length} horários renderizados`);
+}
+
+// ============================================
 // FUNÇÕES PRINCIPAIS
 // ============================================
 
@@ -310,28 +338,6 @@ function atualizarHora() {
 }
 
 // ============================================
-// FUNÇÕES DE INTERFACE
-// ============================================
-
-function renderizarHorarios() {
-    const grid = document.getElementById('horarioGrid');
-    if (!grid) return;
-    
-    // Limpa a grid
-    grid.innerHTML = '';
-    
-    // Ordena os horários pela hora
-    const horariosArray = Object.values(HORARIOS).sort((a, b) => a.hora.localeCompare(b.hora));
-    
-    horariosArray.forEach(horario => {
-        const div = document.createElement('div');
-        div.className = `horario-item ${horario.tipo}`;
-        div.textContent = horario.label;
-        grid.appendChild(div);
-    });
-}
-
-// ============================================
 // FUNÇÕES DE LOG
 // ============================================
 
@@ -342,13 +348,6 @@ function adicionarLog(mensagem, tipo = null) {
     
     const entry = document.createElement('div');
     entry.className = 'log-entry';
-    
-    if (tipo === 'aviso') {
-        entry.classList.add('aviso-log');
-    } else if (tipo === 'intervalo') {
-        entry.classList.add('intervalo-log');
-    }
-    
     entry.innerHTML = `<span class="time">[${hora}]</span>${mensagem}`;
     
     logArea.appendChild(entry);
@@ -364,25 +363,26 @@ function adicionarLog(mensagem, tipo = null) {
 // INICIALIZAÇÃO
 // ============================================
 
-// Renderizar horários na interface
+// 1. RENDERIZAR OS HORÁRIOS NA INTERFACE (executado imediatamente)
 renderizarHorarios();
 
-// Atualizar hora inicial
+// 2. Atualizar hora inicial
 atualizarHora();
 
-// Verificar próximo toque imediatamente
+// 3. Verificar próximo toque imediatamente
 const agora = new Date();
 const horaAtual = `${agora.getHours().toString().padStart(2, '0')}:${agora.getMinutes().toString().padStart(2, '0')}`;
 atualizarProximoToque(horaAtual);
 
-// Pré-inicializar áudio
+// 4. Pré-inicializar áudio (quando o usuário clicar em qualquer lugar)
 document.addEventListener('click', () => {
     if (!audioContext) {
         audioContext = new (window.AudioContext || window.webkitAudioContext)();
     }
 });
 
+// 5. Mensagens de boas-vindas
 adicionarLog('🚀 Sistema carregado. Clique em "Iniciar" para ativar.');
 adicionarLog('💡 O sistema prioriza arquivos MP3. Se não encontrar, usa som gerado.');
 adicionarLog('📁 Certifique-se que os arquivos MP3 estão na mesma pasta.');
-adicionarLog('📋 Horários configurados: 7 normais, 2 intervalos, 7 avisos');
+adicionarLog(`📋 ${Object.keys(HORARIOS).length} horários configurados.`);
