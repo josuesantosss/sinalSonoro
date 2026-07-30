@@ -26,7 +26,7 @@
             border-radius: 20px;
             padding: 40px;
             box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            max-width: 500px;
+            max-width: 600px;
             width: 100%;
         }
 
@@ -162,7 +162,7 @@
 
         .horario-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(4, 1fr);
             gap: 8px;
         }
 
@@ -171,13 +171,39 @@
             padding: 8px;
             border-radius: 6px;
             text-align: center;
-            font-size: 14px;
+            font-size: 13px;
             color: #333;
+            transition: all 0.2s;
+        }
+
+        .horario-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
 
         .horario-item.intervalo {
             background: #fff3cd;
             color: #856404;
+            font-weight: bold;
+        }
+
+        .horario-item.aviso {
+            background: #e8f4fd;
+            color: #0056b3;
+            border: 1px dashed #0056b3;
+            font-size: 12px;
+        }
+
+        .horario-item.tocando {
+            background: #28a745;
+            color: white;
+            animation: pulse 0.5s ease-in-out 3;
+            font-weight: bold;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
         }
 
         .log {
@@ -195,20 +221,37 @@
             background: #f8f9fa;
             border-radius: 8px;
             padding: 10px;
-            max-height: 150px;
+            max-height: 200px;
             overflow-y: auto;
             font-size: 12px;
             font-family: 'Courier New', monospace;
         }
 
         .log-entry {
-            padding: 2px 0;
+            padding: 3px 0;
             border-bottom: 1px solid #eee;
         }
 
         .log-entry .time {
             color: #666;
             margin-right: 10px;
+            font-weight: bold;
+        }
+
+        .log-entry.aviso {
+            color: #0056b3;
+        }
+
+        .log-entry.intervalo {
+            color: #856404;
+        }
+
+        .log-entry.normal {
+            color: #28a745;
+        }
+
+        .log-entry.erro {
+            color: #dc3545;
         }
 
         .footer {
@@ -220,6 +263,24 @@
             font-size: 14px;
         }
 
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin: 10px 0;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .stats span {
+            background: #f8f9fa;
+            padding: 5px 15px;
+            border-radius: 20px;
+        }
+
+        .stats strong {
+            color: #333;
+        }
+
         @media (max-width: 600px) {
             .container {
                 padding: 20px;
@@ -229,6 +290,17 @@
                 font-size: 36px;
             }
             
+            .horario-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .btn {
+                padding: 10px 16px;
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 400px) {
             .horario-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
@@ -245,39 +317,35 @@
             <div class="proximo-toque">
                 Próximo toque: <strong id="proximoToque">--:--</strong>
             </div>
-            <div id="statusSistema" class="status-indicator status-inativo">Sistema Desligado</div>
+            <div id="statusSistema" class="status-indicator status-inativo">🔴 Sistema Desligado</div>
+            <div class="stats">
+                <span>Toques hoje: <strong id="totalToques">0</strong></span>
+                <span>Último: <strong id="ultimoToqueLabel">--:--</strong></span>
+            </div>
         </div>
 
         <div class="controles">
             <button class="btn btn-success" onclick="iniciarSistema()">▶ Iniciar</button>
             <button class="btn btn-danger" onclick="pararSistema()">⏹ Parar</button>
             <button class="btn btn-warning" onclick="testarSom()">🔊 Testar</button>
+            <button class="btn btn-secondary" onclick="limparLog()">🗑 Limpar Log</button>
         </div>
 
         <div class="horarios">
             <h3>📅 Horários Programados</h3>
-            <div class="horario-grid">
-                <div class="horario-item">07:00</div>
-                <div class="horario-item">07:45</div>
-                <div class="horario-item">07:50</div>
-                <div class="horario-item">08:40</div>
-                <div class="horario-item">09:30</div>
-                <div class="horario-item intervalo">10:20 (Intervalo)</div>
-                <div class="horario-item intervalo">10:40 (Intervalo)</div>
-                <div class="horario-item">11:30</div>
-            </div>
+            <div class="horario-grid" id="horarioGrid"></div>
         </div>
 
         <div class="log">
             <h3>📋 Log do Sistema</h3>
             <div class="log-area" id="logArea">
-                <div class="log-entry">Sistema aguardando inicialização...</div>
+                <div class="log-entry">🚀 Sistema carregado. Clique em "Iniciar" para ativar.</div>
             </div>
         </div>
 
         <div class="footer">
             Sistema automático de sinal sonoro<br>
-            <small>Toques a cada 50 minutos | Intervalo 10:20 - 10:40</small>
+            <small>Toques a cada 50 minutos | Avisos 5 min antes | Intervalo 10:20 - 10:40</small>
         </div>
     </div>
 
