@@ -3,14 +3,22 @@
 // ============================================
 
 const HORARIOS = {
+    // Horários originais
     '700': { hora: '07:00', label: '07:00', tipo: 'normal' },
-    '745': { hora: '07:45', label: '07:45', tipo: 'normal' },
     '750': { hora: '07:50', label: '07:50', tipo: 'normal' },
     '840': { hora: '08:40', label: '08:40', tipo: 'normal' },
     '930': { hora: '09:30', label: '09:30', tipo: 'normal' },
     '1020': { hora: '10:20', label: '10:20', tipo: 'intervalo' },
     '1040': { hora: '10:40', label: '10:40', tipo: 'intervalo' },
-    '1130': { hora: '11:30', label: '11:30', tipo: 'normal' }
+    '1130': { hora: '11:30', label: '11:30', tipo: 'normal' },
+
+    // ⏰ AVISOS 5 MINUTOS ANTES (gerados automaticamente)
+    '745': { hora: '07:45', label: '07:45', tipo: 'normal' },
+    '835': { hora: '08:35', label: '08:35', tipo: 'aviso' },
+    '925': { hora: '09:25', label: '09:25', tipo: 'aviso' },
+    '1015': { hora: '10:15', label: '10:15', tipo: 'aviso' },
+    '1035': { hora: '10:35', label: '10:35', tipo: 'aviso' },
+    '1125': { hora: '11:25', label: '11:25', tipo: 'aviso' }
 };
 
 let sistemaAtivo = false;
