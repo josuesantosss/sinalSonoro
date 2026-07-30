@@ -26,7 +26,7 @@
             border-radius: 20px;
             padding: 40px;
             box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            max-width: 550px;
+            max-width: 600px;
             width: 100%;
         }
 
@@ -98,26 +98,6 @@
             transition: all 0.3s ease;
         }
 
-        .btn-primary {
-            background: #667eea;
-            color: white;
-        }
-
-        .btn-primary:hover {
-            background: #5a67d8;
-            transform: translateY(-2px);
-        }
-
-        .btn-danger {
-            background: #dc3545;
-            color: white;
-        }
-
-        .btn-danger:hover {
-            background: #c82333;
-            transform: translateY(-2px);
-        }
-
         .btn-success {
             background: #28a745;
             color: white;
@@ -128,13 +108,13 @@
             transform: translateY(-2px);
         }
 
-        .btn-secondary {
-            background: #6c757d;
+        .btn-danger {
+            background: #dc3545;
             color: white;
         }
 
-        .btn-secondary:hover {
-            background: #5a6268;
+        .btn-danger:hover {
+            background: #c82333;
             transform: translateY(-2px);
         }
 
@@ -156,7 +136,7 @@
 
         .horarios h3 {
             color: #333;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
             text-align: center;
         }
 
@@ -262,22 +242,6 @@
             margin-right: 10px;
         }
 
-        .log-entry.aviso-log {
-            color: #0c5460;
-            background: #d1ecf1;
-            padding: 3px 8px;
-            border-radius: 4px;
-            margin: 2px 0;
-        }
-
-        .log-entry.intervalo-log {
-            color: #155724;
-            background: #d4edda;
-            padding: 3px 8px;
-            border-radius: 4px;
-            margin: 2px 0;
-        }
-
         .footer {
             text-align: center;
             margin-top: 20px;
@@ -330,11 +294,11 @@
         <div class="horarios">
             <h3>📅 Horários Programados</h3>
             <div class="horario-grid" id="horarioGrid">
-                <!-- Gerado dinamicamente pelo JavaScript -->
+                <!-- Os horários serão inseridos aqui pelo JavaScript -->
             </div>
             <div class="legenda">
                 <span class="legenda-item">
-                    <span class="legenda-cor normal"></span> Horário Normal
+                    <span class="legenda-cor normal"></span> Troca de Aula
                 </span>
                 <span class="legenda-item">
                     <span class="legenda-cor intervalo"></span> Intervalo
