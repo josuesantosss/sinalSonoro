@@ -105,7 +105,7 @@ function testarSom() {
     };
     
     audio.onerror = function() {
-        adicionarLog('⚠️ Arquivo 700.mp3 não encontrado para teste');
+        adicionarLog('⚠️ Arquivo 745.mp3 não encontrado para teste');
         // Fallback: som gerado
         tocarSomFallback();
     };
