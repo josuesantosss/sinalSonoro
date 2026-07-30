@@ -5,7 +5,7 @@
 // Configuração dos horários
 const HORARIOS = {
     // Horários normais (AMARELO)
-    '700': { hora: '07:00', label: '07:00', tipo: 'normal' },
+    '640': { hora: '06:40', label: '06:40', tipo: 'normal' },
     '750': { hora: '07:50', label: '07:50', tipo: 'normal' },
     '840': { hora: '08:40', label: '08:40', tipo: 'normal' },
     '930': { hora: '09:30', label: '09:30', tipo: 'normal' },
